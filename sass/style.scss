@@ -6,3 +6,13 @@
 @use "./pages/pages" as *;
 @use "./themes/themes" as *;
 @use "settings" as *;
+#juego {
+  display: grid;
+  grid-template-columns: repeat(9, 30px);
+}
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #999;
+  background-color: rgb(20, 20, 20);
+}
