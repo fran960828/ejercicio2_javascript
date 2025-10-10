@@ -1,43 +1,64 @@
 import { shuffleArray } from "../utils/utils";
 import Cell from "./cell";
+
 class Board {
   #cols;
   #rows;
-  board;
+  #element;
+  cells;
 
-  constructor(cols, rows) {
+  constructor(cols, rows,element) {
     this.#cols = cols;
     this.#rows = rows;
-    this.board = [];
+    this.#element=element
+    this.cells = [];
   }
+
   get cols() {
     return this.#cols;
   }
+
   get rows() {
     return this.#rows;
   }
+  get element(){
+    return this.#element
+  }
+
   buildArray() {
+    // Crear array plano con minas y ceros
     const array = Array(this.#cols)
       .fill("B")
       .concat(Array(this.#cols * this.#rows - this.#cols).fill(0));
     shuffleArray(array);
-    const arrayBi = [];
-    for (let i = 0; i < this.#cols; i++) {
+
+    // Convertir a matriz bidimensional
+    let arrayBi = [];
+    for (let i = 0; i < this.#rows; i++) {
       arrayBi.push(array.slice(i * this.#cols, (i + 1) * this.#cols));
     }
-    this.board = this.asignArray(arrayBi);
-    return this.board;
+
+    // Asignar números a las celdas según minas
+    const arraycells = this.asignArray(arrayBi);
+
+    // Crear matriz de instancias Cell
+    this.cells = [];
+    for (let i = 0; i < this.#rows; i++) {
+      let rowCells = [];
+      for (let j = 0; j < this.#cols; j++) {
+        let cell = new Cell(i, j, arraycells[i][j]);
+        rowCells.push(cell);
+      }
+      this.cells.push(rowCells);
+    }
+    return this.cells;
   }
+
   asignArray(array) {
     const movs = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1],  [1, 0],  [1, 1],
     ];
 
     for (let i = 0; i < array.length; i++) {
@@ -46,7 +67,6 @@ class Board {
           movs.forEach(([dx, dy]) => {
             const nuevoI = i + dx;
             const nuevoJ = j + dy;
-
             if (
               nuevoI >= 0 &&
               nuevoI < array.length &&
@@ -60,39 +80,25 @@ class Board {
         }
       }
     }
-
     return array;
   }
 }
 
 class BoardView {
-  #board;
-  #element;
-  cells;
-  constructor(board, element) {
-    this.#board = board.buildArray(); // buildArray debe devolver el array 2D
-    this.#element = document.getElementById(element);
-    this.cells = [];
-  }
-
-  get board() {
-    return this.#board;
+  constructor(board) {
+    this.board=board
   }
 
   createCellsDom() {
-    for (let i = 0; i < this.#board.length; i++) {
-      for (let j = 0; j < this.#board[i].length; j++) {
-        let cell = new Cell(i, j, this.#board[i][j]);
+    let cellsMatrix=this.board.buildArray()
+    cellsMatrix.forEach(row => {
+      row.forEach(cell => {
         let newDiv = document.createElement("div");
         newDiv.classList.add("cell");
-        newDiv.dataset.row = i;
-        newDiv.dataset.col = j;
-
         cell.element = newDiv;
-        this.cells.push(cell);
-        this.#element.appendChild(newDiv);
-      }
-    }
+        this.board.element.appendChild(newDiv);
+      });
+    });
   }
 }
 

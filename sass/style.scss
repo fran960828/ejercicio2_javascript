@@ -6,7 +6,7 @@
 @use "./pages/pages" as *;
 @use "./themes/themes" as *;
 @use "settings" as *;
-#juego {
+#game {
   display: grid;
   grid-template-columns: repeat(9, 30px);
 }
