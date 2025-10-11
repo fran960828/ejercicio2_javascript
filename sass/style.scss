@@ -9,10 +9,36 @@
 #game {
   display: grid;
   grid-template-columns: repeat(9, 30px);
+  grid-template-rows: repeat(9, 30px);
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
+
 .cell {
   width: 30px;
   height: 30px;
+  background: #ccc;
   border: 1px solid #999;
-  background-color: rgb(20, 20, 20);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+#reset {
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
 }

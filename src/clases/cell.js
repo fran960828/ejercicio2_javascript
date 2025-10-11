@@ -4,7 +4,7 @@ class Cell {
   #state;
   #content;
   #element;
-  constructor(row, col, content, state = "cerrada") {
+  constructor(row, col, content, state = "close") {
     this.#col = col;
     this.#row = row;
     this.#content = content;
@@ -21,6 +21,9 @@ class Cell {
   }
   get content() {
     return this.#content;
+  }
+  get element() {
+    return this.#element;
   }
   set element(element) {
     this.#element = element;
