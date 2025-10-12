@@ -22,7 +22,7 @@ class Timer {
   start() {
     // Detener cualquier intervalo existente antes de iniciar uno nuevo
     if (this.count) {
-      this.stop();
+      return;
     }
     // Usar setInterval para actualizar el tiempo cada 10 ms
     this.count = setInterval(() => {

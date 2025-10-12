@@ -90,8 +90,8 @@ class Board {
     return array;
   }
   Opencells() {
-    this.timer.start();
     this.#element.addEventListener("click", (event) => {
+      this.timer.start();
       const div = event.target.closest(".cell");
 
       if (!div) return;
@@ -210,12 +210,10 @@ class Board {
     newArray.flat().forEach((cell, i) => {
       cell.element = divs[i];
       cell.state = "close";
-    });
+    
 
-    // 5️⃣ Reinicia eventos y temporizador
-    this.timer.restart();
-    this.Opencells();
-    this.addFlagEvent();
+      
+    });
   }
 }
 
