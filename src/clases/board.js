@@ -5,12 +5,14 @@ import Timer from "./timer";
 class Board {
   #cols;
   #rows;
+  #bomb;
   #element;
   cells;
 
-  constructor(cols, rows, element, timer) {
+  constructor(cols, rows, bomb, element, timer) {
     this.#cols = cols;
     this.#rows = rows;
+    this.#bomb = bomb;
     this.#element = element;
     this.timer = timer;
     this.cells = [];
@@ -19,9 +21,11 @@ class Board {
   get cols() {
     return this.#cols;
   }
-
   get rows() {
     return this.#rows;
+  }
+  get bomb() {
+    return this.#bomb;
   }
   get element() {
     return this.#element;
@@ -29,9 +33,9 @@ class Board {
 
   buildArray() {
     // Crear array plano con minas y ceros
-    const array = Array(this.#cols)
+    const array = Array(this.#bomb)
       .fill("B")
-      .concat(Array(this.#cols * this.#rows - this.#cols).fill(0));
+      .concat(Array(this.#cols * this.#rows - this.#bomb).fill(0));
     shuffleArray(array);
 
     // Convertir a matriz bidimensional
@@ -210,10 +214,9 @@ class Board {
     newArray.flat().forEach((cell, i) => {
       cell.element = divs[i];
       cell.state = "close";
-    
-
-      
     });
+    // 5️⃣ Reinicia el temporizador
+    this.timer.restart();
   }
 }
 

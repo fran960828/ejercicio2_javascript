@@ -52,6 +52,7 @@ class Timer {
   // Método para detener el cronómetro
   stop() {
     clearInterval(this.count); // Detener el intervalo
+    this.count = null; // Limpiar el identificador del intervalo
   }
 
   // Método para actualizar el texto del cronómetro en el DOM
@@ -62,12 +63,10 @@ class Timer {
 
   // Método para reiniciar el cronómetro
   restart() {
-    this.stop(); // Detener el cronómetro
     this.ms = 0; // Reiniciar milisegundos
     this.sec = 0; // Reiniciar segundos
     this.min = 0; // Reiniciar minutos
     this.update("00:00:00"); // Actualizar el texto a "00:00:00"
-    this.start(); // Iniciar el cronómetro nuevamente
   }
 
   // Método para formatear los valores de tiempo a dos dígitos
