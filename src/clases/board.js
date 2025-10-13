@@ -236,8 +236,6 @@ class BoardView {
       });
     });
     const resetBtn = document.getElementById("reset");
-    const header = document.querySelector(".header");
-    header.prepend(resetBtn);
     const divs = document.querySelectorAll(".cell");
     resetBtn.addEventListener("click", () => this.board.restart(divs));
     this.board.Opencells();

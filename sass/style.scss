@@ -21,6 +21,7 @@
   height: 30px;
   background: #ccc;
   border: 1px solid #999;
+  border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
@@ -41,4 +42,100 @@
   font-size: 14px;
   border-radius: 6px;
   cursor: pointer;
+}
+#difficulty {
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 200px;
+    height: auto;
+  }
+  h1 {
+    font-size: 32px;
+    margin: 10px 0;
+    color: rgb(225, 169, 60);
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    top: -40px;
+  }
+}
+body {
+  background-image: url("img/bg.png");
+  color: white;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ventana emergente */
+.popup {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  padding: 2rem 3rem;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  color: #fff;
+  max-width: 400px;
+  width: 90%;
+}
+
+.popup h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #e1a93c; /* el dorado del logo */
+  letter-spacing: 1px;
+}
+
+.popup p {
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Botones */
+.level__btn {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e1a93c, #f1d17d);
+  color: #1e1e1e;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.level__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px #e1a93c;
+}
+
+.level__btn:active {
+  transform: scale(0.98);
 }

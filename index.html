@@ -7,15 +7,32 @@
     <title>Ejercicio Buscaminas</title>
   </head>
   <body>
-    <h1>BUSCAMINAS</h1>
-
-    <div class="board">
-      <div class="header">
-        <button id="reset">Reset</button>
-        <p id="container__timer">Time:<span id="timer">00:00:00</span></p>
+    <header>
+      <img src="img/logo.png" alt="logo" />
+      <h1>MINESWEEPER</h1>
+    </header>
+    <main>
+      <div class="board">
+        <div class="header">
+          <p id="container__timer">Time:<span id="timer">00:00:00</span></p>
+          <p id="container__flags">Flags:<span id="flags">0</span></p>
+        </div>
+        <div id="game"></div>
       </div>
-      <div id="game"></div>
-    </div>
+      <div class="btns">
+        <button id="reset">Restart Game</button>
+        <button id="difficulty">Difficulty Level</button>
+      </div>
+      <div class="overlay">
+        <div class="popup">
+          <h2>Selecciona la Dificultad</h2>
+          <p>Elige el nivel de desafío para tu partida de Buscaminas.</p>
+          <button class="level__btn" data-level="easy">Easy 🟢</button>
+          <button class="level__btn" data-level="medium">Medium 🟡</button>
+          <button class="level__btn" data-level="hard">Hard 🔴</button>
+        </div>
+      </div>
+    </main>
 
     <script type="module" src="src/main.js"></script>
   </body>
