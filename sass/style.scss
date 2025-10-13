@@ -1,141 +1,171 @@
-@use "./vendors/vendors" as *;
-@use "./abstracts/abstracts" as *;
-@use "./base/base" as *;
-@use "./components/components" as *;
-@use "./layout/layout" as *;
-@use "./pages/pages" as *;
-@use "./themes/themes" as *;
-@use "settings" as *;
+// ─────────────────────────────────────────────
+// IMPORTS: Estructura modular de SASS
+// ─────────────────────────────────────────────
+@use "./vendors/vendors" as *;      // Librerías externas
+@use "./abstracts/abstracts" as *;  // Variables, mixins, funciones
+@use "./base/base" as *;            // Estilos base (reset, tipografía)
+@use "./components/components" as *;// Componentes reutilizables
+@use "./layout/layout" as *;        // Estructura de layout
+@use "./pages/pages" as *;          // Estilos específicos de páginas
+@use "./themes/themes" as *;        // Temas de color
+@use "settings" as *;               // Configuración global
+
+// ─────────────────────────────────────────────
+// TABLERO DEL JUEGO
+// ─────────────────────────────────────────────
 #game {
-  display: grid;
-  grid-template-columns: repeat(9, 30px);
-  grid-template-rows: repeat(9, 30px);
-  gap: 4px;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
+  display: grid; // Usamos grid para el tablero
+  grid-template-columns: repeat(9, 30px); // 9 columnas de 30px
+  grid-template-rows: repeat(9, 30px);    // 9 filas de 30px
+  gap: 4px;                               // Separación entre celdas
+  justify-content: center;                // Centrado horizontal
+  align-items: center;                    // Centrado vertical
+  margin: 20px;                           // Margen exterior
 }
 
+// ─────────────────────────────────────────────
+// CELDAS DEL TABLERO
+// ─────────────────────────────────────────────
 .cell {
-  width: 30px;
-  height: 30px;
-  background: #ccc;
-  border: 1px solid #999;
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
+  width: 30px;                            // Ancho fijo
+  height: 30px;                           // Alto fijo
+  background: #ccc;                       // Fondo gris claro
+  border: 1px solid #999;                 // Borde gris oscuro
+  border-radius: 4px;                     // Bordes redondeados
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); // Sombra suave
+  display: flex;                          // Centrado de contenido
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  font-weight: bold;
-  color: red;
+  cursor: pointer;                        // Cursor de mano
+  font-weight: bold;                      // Texto en negrita
+  color: red;                             // Color de texto rojo
 }
+
+// ─────────────────────────────────────────────
+// CABECERA Y BOTONES
+// ─────────────────────────────────────────────
 .header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
+  display: flex;                          // Layout flexible
+  justify-content: center;                // Centrado horizontal
+  align-items: center;                    // Centrado vertical
+  gap: 30px;                              // Espacio entre elementos
 }
-#reset {
-  margin-bottom: 10px;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
+
+#reset, #difficulty {
+  margin-bottom: 10px;                    // Separación inferior
+  padding: 6px 12px;                      // Espaciado interno
+  font-size: 14px;                        // Tamaño de fuente
+  border-radius: 6px;                     // Bordes redondeados
+  cursor: pointer;                        // Cursor de mano
 }
-#difficulty {
-  margin-bottom: 10px;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+
+// ─────────────────────────────────────────────
+// ESTILOS DEL HEADER PRINCIPAL
+// ─────────────────────────────────────────────
 header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: flex;                          // Layout flexible
+  flex-direction: column;                 // Elementos en columna
+  justify-content: center;                // Centrado vertical
+  align-items: center;                    // Centrado horizontal
+
   img {
-    width: 200px;
-    height: auto;
+    width: 200px;                         // Logo ancho fijo
+    height: auto;                         // Altura automática
   }
   h1 {
-    font-size: 32px;
-    margin: 10px 0;
-    color: rgb(225, 169, 60);
-    position: relative;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    top: -40px;
+    font-size: 32px;                      // Título grande
+    margin: 10px 0;                       // Margen vertical
+    color: rgb(225, 169, 60);             // Color dorado
+    position: relative;                   // Posicionamiento relativo
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); // Sombra de texto
+    top: -40px;                           // Desplazamiento hacia arriba
   }
 }
+
+// ─────────────────────────────────────────────
+// FONDO Y COLOR GENERAL
+// ─────────────────────────────────────────────
 body {
-  background-image: url("img/bg.png");
-  color: white;
+  background-image: url("img/bg.png");    // Imagen de fondo
+  color: white;                           // Color de texto principal
+  z-index: -1000;                         // Fondo detrás de todo
 }
+
+// ─────────────────────────────────────────────
+// BOTONES DE NIVELES Y CONTENEDORES
+// ─────────────────────────────────────────────
 .btns {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+  display: flex;                          // Layout flexible
+  justify-content: center;                // Centrado horizontal
+  align-items: center;                    // Centrado vertical
+  gap: 20px;                              // Espacio entre botones
 }
+
+// ─────────────────────────────────────────────
+// OVERLAY: Fondo para ventanas emergentes
+// ─────────────────────────────────────────────
 .overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  display: flex;
+  position: fixed;                        // Fijo en pantalla
+  inset: 0;                               // Ocupa toda la pantalla
+  background: rgba(0, 0, 0, 0.6);         // Fondo semitransparente
+  backdrop-filter: blur(6px);             // Difumina el fondo
+  display: flex;                          // Centrado de contenido
   align-items: center;
   justify-content: center;
 }
 
-/* Ventana emergente */
+// ─────────────────────────────────────────────
+// POPUP: Ventana emergente de resultado
+// ─────────────────────────────────────────────
 .popup {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-  padding: 2rem 3rem;
-  text-align: center;
-  backdrop-filter: blur(15px);
-  color: #fff;
-  max-width: 400px;
-  width: 90%;
+  background: rgba(255, 255, 255, 0.1);   // Fondo translúcido
+  border: 1px solid rgba(255, 255, 255, 0.2); // Borde suave
+  border-radius: 20px;                    // Bordes redondeados
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);// Sombra fuerte
+  padding: 2rem 3rem;                     // Espaciado interno
+  text-align: center;                     // Texto centrado
+  backdrop-filter: blur(15px);            // Difumina el fondo
+  color: #fff;                            // Texto blanco
+  max-width: 400px;                       // Ancho máximo
+  width: 90%;                             // Ancho relativo
 }
 
 .popup h2 {
-  margin-top: 0;
-  font-size: 1.8rem;
-  color: #e1a93c; /* el dorado del logo */
-  letter-spacing: 1px;
+  margin-top: 0;                          // Sin margen superior
+  font-size: 1.8rem;                      // Tamaño grande
+  color: #e1a93c;                         // Color dorado
+  letter-spacing: 1px;                    // Espaciado entre letras
 }
 
 .popup p {
-  color: #ccc;
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  color: #ccc;                            // Texto gris claro
+  font-size: 1rem;                        // Tamaño normal
+  margin-bottom: 2rem;                    // Margen inferior
 }
 
-/* Botones */
+// ─────────────────────────────────────────────
+// BOTONES DE NIVELES
+// ─────────────────────────────────────────────
 .level__btn {
-  display: block;
+  display: block;                         // Botón ocupa todo el ancho
   width: 100%;
-  padding: 0.8rem;
-  margin: 0.5rem 0;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #e1a93c, #f1d17d);
-  color: #1e1e1e;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
+  padding: 0.8rem;                        // Espaciado interno
+  margin: 0.5rem 0;                       // Margen vertical
+  border: none;                           // Sin borde
+  border-radius: 10px;                    // Bordes redondeados
+  background: linear-gradient(135deg, #e1a93c, #f1d17d); // Fondo degradado dorado
+  color: #1e1e1e;                         // Texto oscuro
+  font-weight: 600;                       // Negrita
+  cursor: pointer;                        // Cursor de mano
+  transition: all 0.3s ease;              // Transición suave
+  letter-spacing: 0.5px;                  // Espaciado entre letras
 }
 
 .level__btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 12px #e1a93c;
+  transform: translateY(-3px);            // Efecto de elevación
+  box-shadow: 0 0 12px #e1a93c;           // Sombra dorada
 }
 
 .level__btn:active {
-  transform: scale(0.98);
+  transform: scale(0.98);                 // Efecto de presión
 }
