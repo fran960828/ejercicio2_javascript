@@ -1,14 +1,14 @@
 // ─────────────────────────────────────────────
 // IMPORTS: Estructura modular de SASS
 // ─────────────────────────────────────────────
-@use "./vendors/vendors" as *;      // Librerías externas
-@use "./abstracts/abstracts" as *;  // Variables, mixins, funciones
-@use "./base/base" as *;            // Estilos base (reset, tipografía)
-@use "./components/components" as *;// Componentes reutilizables
-@use "./layout/layout" as *;        // Estructura de layout
-@use "./pages/pages" as *;          // Estilos específicos de páginas
-@use "./themes/themes" as *;        // Temas de color
-@use "settings" as *;               // Configuración global
+@use "./vendors/vendors" as *; // Librerías externas
+@use "./abstracts/abstracts" as *; // Variables, mixins, funciones
+@use "./base/base" as *; // Estilos base (reset, tipografía)
+@use "./components/components" as *; // Componentes reutilizables
+@use "./layout/layout" as *; // Estructura de layout
+@use "./pages/pages" as *; // Estilos específicos de páginas
+@use "./themes/themes" as *; // Temas de color
+@use "settings" as *; // Configuración global
 
 // ─────────────────────────────────────────────
 // TABLERO DEL JUEGO
@@ -16,69 +16,73 @@
 #game {
   display: grid; // Usamos grid para el tablero
   grid-template-columns: repeat(9, 30px); // 9 columnas de 30px
-  grid-template-rows: repeat(9, 30px);    // 9 filas de 30px
-  gap: 4px;                               // Separación entre celdas
-  justify-content: center;                // Centrado horizontal
-  align-items: center;                    // Centrado vertical
-  margin: 20px;                           // Margen exterior
+  grid-template-rows: repeat(9, 30px); // 9 filas de 30px
+  gap: 4px; // Separación entre celdas
+  justify-content: center; // Centrado horizontal
+  align-items: center; // Centrado vertical
+  margin: 20px; // Margen exterior
 }
 
 // ─────────────────────────────────────────────
 // CELDAS DEL TABLERO
 // ─────────────────────────────────────────────
 .cell {
-  width: 30px;                            // Ancho fijo
-  height: 30px;                           // Alto fijo
-  background: #ccc;                       // Fondo gris claro
-  border: 1px solid #999;                 // Borde gris oscuro
-  border-radius: 4px;                     // Bordes redondeados
+  width: 30px; // Ancho fijo
+  height: 30px; // Alto fijo
+  background: #ccc; // Fondo gris claro
+  border: 1px solid #999; // Borde gris oscuro
+  border-radius: 4px; // Bordes redondeados
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); // Sombra suave
-  display: flex;                          // Centrado de contenido
+  display: flex; // Centrado de contenido
   justify-content: center;
   align-items: center;
-  cursor: pointer;                        // Cursor de mano
-  font-weight: bold;                      // Texto en negrita
-  color: red;                             // Color de texto rojo
+  cursor: pointer; // Cursor de mano
+  font-family: "Courier New", Courier, monospace;
+  font-size: 18px;
+  font-weight: bold; // Texto en negrita
+  color: white; // Color de texto blanco
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); // Sombra de texto
 }
 
 // ─────────────────────────────────────────────
 // CABECERA Y BOTONES
 // ─────────────────────────────────────────────
 .header {
-  display: flex;                          // Layout flexible
-  justify-content: center;                // Centrado horizontal
-  align-items: center;                    // Centrado vertical
-  gap: 30px;                              // Espacio entre elementos
+  display: flex; // Layout flexible
+  justify-content: center; // Centrado horizontal
+  align-items: center; // Centrado vertical
+  gap: 30px; // Espacio entre elementos
 }
 
-#reset, #difficulty {
-  margin-bottom: 10px;                    // Separación inferior
-  padding: 6px 12px;                      // Espaciado interno
-  font-size: 14px;                        // Tamaño de fuente
-  border-radius: 6px;                     // Bordes redondeados
-  cursor: pointer;                        // Cursor de mano
+#reset,
+#difficulty {
+  margin-bottom: 10px; // Separación inferior
+  padding: 6px 12px; // Espaciado interno
+  font-size: 14px; // Tamaño de fuente
+  border-radius: 6px; // Bordes redondeados
+  cursor: pointer; // Cursor de mano
 }
 
 // ─────────────────────────────────────────────
 // ESTILOS DEL HEADER PRINCIPAL
 // ─────────────────────────────────────────────
 header {
-  display: flex;                          // Layout flexible
-  flex-direction: column;                 // Elementos en columna
-  justify-content: center;                // Centrado vertical
-  align-items: center;                    // Centrado horizontal
+  display: flex; // Layout flexible
+  flex-direction: column; // Elementos en columna
+  justify-content: center; // Centrado vertical
+  align-items: center; // Centrado horizontal
 
   img {
-    width: 200px;                         // Logo ancho fijo
-    height: auto;                         // Altura automática
+    width: 200px; // Logo ancho fijo
+    height: auto; // Altura automática
   }
   h1 {
-    font-size: 32px;                      // Título grande
-    margin: 10px 0;                       // Margen vertical
-    color: rgb(225, 169, 60);             // Color dorado
-    position: relative;                   // Posicionamiento relativo
+    font-size: 32px; // Título grande
+    margin: 10px 0; // Margen vertical
+    color: rgb(225, 169, 60); // Color dorado
+    position: relative; // Posicionamiento relativo
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); // Sombra de texto
-    top: -40px;                           // Desplazamiento hacia arriba
+    top: -40px; // Desplazamiento hacia arriba
   }
 }
 
@@ -86,30 +90,30 @@ header {
 // FONDO Y COLOR GENERAL
 // ─────────────────────────────────────────────
 body {
-  background-image: url("img/bg.png");    // Imagen de fondo
-  color: white;                           // Color de texto principal
-  z-index: -1000;                         // Fondo detrás de todo
+  background-image: url("img/bg.png"); // Imagen de fondo
+  color: white; // Color de texto principal
+  z-index: -1000; // Fondo detrás de todo
 }
 
 // ─────────────────────────────────────────────
 // BOTONES DE NIVELES Y CONTENEDORES
 // ─────────────────────────────────────────────
 .btns {
-  display: flex;                          // Layout flexible
-  justify-content: center;                // Centrado horizontal
-  align-items: center;                    // Centrado vertical
-  gap: 20px;                              // Espacio entre botones
+  display: flex; // Layout flexible
+  justify-content: center; // Centrado horizontal
+  align-items: center; // Centrado vertical
+  gap: 20px; // Espacio entre botones
 }
 
 // ─────────────────────────────────────────────
 // OVERLAY: Fondo para ventanas emergentes
 // ─────────────────────────────────────────────
 .overlay {
-  position: fixed;                        // Fijo en pantalla
-  inset: 0;                               // Ocupa toda la pantalla
-  background: rgba(0, 0, 0, 0.6);         // Fondo semitransparente
-  backdrop-filter: blur(6px);             // Difumina el fondo
-  display: flex;                          // Centrado de contenido
+  position: fixed; // Fijo en pantalla
+  inset: 0; // Ocupa toda la pantalla
+  background: rgba(0, 0, 0, 0.6); // Fondo semitransparente
+  backdrop-filter: blur(6px); // Difumina el fondo
+  display: flex; // Centrado de contenido
   align-items: center;
   justify-content: center;
 }
@@ -118,54 +122,64 @@ body {
 // POPUP: Ventana emergente de resultado
 // ─────────────────────────────────────────────
 .popup {
-  background: rgba(255, 255, 255, 0.1);   // Fondo translúcido
+  background: rgba(255, 255, 255, 0.1); // Fondo translúcido
   border: 1px solid rgba(255, 255, 255, 0.2); // Borde suave
-  border-radius: 20px;                    // Bordes redondeados
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);// Sombra fuerte
-  padding: 2rem 3rem;                     // Espaciado interno
-  text-align: center;                     // Texto centrado
-  backdrop-filter: blur(15px);            // Difumina el fondo
-  color: #fff;                            // Texto blanco
-  max-width: 400px;                       // Ancho máximo
-  width: 90%;                             // Ancho relativo
+  border-radius: 20px; // Bordes redondeados
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4); // Sombra fuerte
+  padding: 2rem 3rem; // Espaciado interno
+  text-align: center; // Texto centrado
+  backdrop-filter: blur(15px); // Difumina el fondo
+  color: #fff; // Texto blanco
+  max-width: 400px; // Ancho máximo
+  width: 90%; // Ancho relativo
 }
 
 .popup h2 {
-  margin-top: 0;                          // Sin margen superior
-  font-size: 1.8rem;                      // Tamaño grande
-  color: #e1a93c;                         // Color dorado
-  letter-spacing: 1px;                    // Espaciado entre letras
+  margin-top: 0; // Sin margen superior
+  font-size: 1.8rem; // Tamaño grande
+  color: #e1a93c; // Color dorado
+  letter-spacing: 1px; // Espaciado entre letras
 }
 
 .popup p {
-  color: #ccc;                            // Texto gris claro
-  font-size: 1rem;                        // Tamaño normal
-  margin-bottom: 2rem;                    // Margen inferior
+  color: #ccc; // Texto gris claro
+  font-size: 1rem; // Tamaño normal
+  margin-bottom: 2rem; // Margen inferior
 }
 
 // ─────────────────────────────────────────────
 // BOTONES DE NIVELES
 // ─────────────────────────────────────────────
 .level__btn {
-  display: block;                         // Botón ocupa todo el ancho
+  display: block; // Botón ocupa todo el ancho
   width: 100%;
-  padding: 0.8rem;                        // Espaciado interno
-  margin: 0.5rem 0;                       // Margen vertical
-  border: none;                           // Sin borde
-  border-radius: 10px;                    // Bordes redondeados
-  background: linear-gradient(135deg, #e1a93c, #f1d17d); // Fondo degradado dorado
-  color: #1e1e1e;                         // Texto oscuro
-  font-weight: 600;                       // Negrita
-  cursor: pointer;                        // Cursor de mano
-  transition: all 0.3s ease;              // Transición suave
-  letter-spacing: 0.5px;                  // Espaciado entre letras
+  padding: 0.8rem; // Espaciado interno
+  margin: 0.5rem 0; // Margen vertical
+  border: none; // Sin borde
+  border-radius: 10px; // Bordes redondeados
+  background: linear-gradient(
+    135deg,
+    #e1a93c,
+    #f1d17d
+  ); // Fondo degradado dorado
+  color: #1e1e1e; // Texto oscuro
+  font-weight: 600; // Negrita
+  cursor: pointer; // Cursor de mano
+  transition: all 0.3s ease; // Transición suave
+  letter-spacing: 0.5px; // Espaciado entre letras
 }
 
 .level__btn:hover {
-  transform: translateY(-3px);            // Efecto de elevación
-  box-shadow: 0 0 12px #e1a93c;           // Sombra dorada
+  transform: translateY(-3px); // Efecto de elevación
+  box-shadow: 0 0 12px #e1a93c; // Sombra dorada
 }
 
 .level__btn:active {
-  transform: scale(0.98);                 // Efecto de presión
+  transform: scale(0.98); // Efecto de presión
+}
+.result {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

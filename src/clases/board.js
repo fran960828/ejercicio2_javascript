@@ -108,6 +108,7 @@ class Board {
       } else if (cell.content > 0) {
         cell.element.textContent = cell.content;
         cell.state = "open";
+        this.cssColorCells(cell);
         this.checkStateGame();
       } else {
         this.revealAdjacent(cell.row, cell.col);
@@ -138,6 +139,7 @@ class Board {
     if (cell.content > 0) {
       cell.element.textContent = cell.content;
       cell.state = "open";
+      this.cssColorCells(cell);
       return; // detenemos la propagación aquí
     }
 
@@ -162,11 +164,11 @@ class Board {
   }
   checkStateGame() {
     const cellOpen = this.cells.flat().filter((cell) => cell.state === "open");
-    if (cellOpen.length === this.#cols * this.#rows - this.#cols) {
+    if (cellOpen.length === this.#cols * this.#rows - this.#bomb) {
       this.timer.stop();
-      const pWin = document.createElement("p");
+      const pWin = document.createElement("div");
       pWin.classList.add("result");
-      pWin.textContent = "Has Ganado";
+      pWin.innerHTML = `<div class="popup"><h2>PARTIDA GANADA</h2></div>`;
       document.body.appendChild(pWin);
     }
     const bombOpen = this.cells.flat().find((cell) => cell.state === "bomb");
@@ -177,13 +179,15 @@ class Board {
         }
       });
       this.timer.stop();
-      const pLose = document.createElement("p");
+      const pLose = document.createElement("div");
       pLose.classList.add("result");
-      pLose.textContent = "Has Perdido";
+      pLose.innerHTML = `<div class="popup"><h2>PARTIDA PERDIDA</h2></div>`;
       document.body.appendChild(pLose);
     }
   }
   addFlagEvent() {
+    const flag = document.getElementById("flags");
+    flag.textContent = this.#bomb;
     this.#element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
       const div = event.target.closest(".cell");
@@ -197,6 +201,10 @@ class Board {
         cell.state = "close";
         cell.element.textContent = "";
       }
+      flag.textContent = `${
+        this.#bomb -
+        this.cells.flat().filter((cell) => cell.state === "flag").length
+      }`;
     });
   }
   restart(divs) {
@@ -215,8 +223,21 @@ class Board {
       cell.element = divs[i];
       cell.state = "close";
     });
+    const flag = document.getElementById("flags");
+    flag.textContent = this.#bomb;
     // 5️⃣ Reinicia el temporizador
     this.timer.restart();
+  }
+  cssColorCells(cell) {
+    if (cell.content === 0) cell.element.style.color = "white";
+    if (cell.content === 1) cell.element.style.color = "blue";
+    if (cell.content === 2) cell.element.style.color = "green";
+    if (cell.content === 3) cell.element.style.color = "red";
+    if (cell.content === 4) cell.element.style.color = "purple";
+    if (cell.content === 5) cell.element.style.color = "maroon";
+    if (cell.content === 6) cell.element.style.color = "turquoise";
+    if (cell.content === 7) cell.element.style.color = "black";
+    if (cell.content === 8) cell.element.style.color = "gray";
   }
 }
 
