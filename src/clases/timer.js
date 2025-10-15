@@ -1,83 +1,63 @@
-// Clase Timer para gestionar un cronómetro
-class Timer {
-  // Propiedades del cronómetro
-  min; // Minutos
-  sec; // Segundos
-  ms; // Milisegundos
-  count; // Identificador del intervalo
-  malt; // Minutos con formato (dos dígitos)
-  salt; // Segundos con formato (dos dígitos)
-  msalt; // Milisegundos con formato (dos dígitos)
-  idElement; // ID del elemento HTML donde se mostrará el cronómetro
-
-  // Constructor: inicializa el cronómetro y asigna el ID del elemento HTML
+/**
+ * Clase Timer
+ * Gestiona un cronómetro con minutos, segundos y milisegundos.
+ */
+export default class Timer {
   constructor(idElement = "timer") {
-    this.idElement = idElement; // ID del elemento donde se mostrará el tiempo
-    this.ms = 0; // Inicializar milisegundos en 0
-    this.min = 0; // Inicializar minutos en 0
-    this.sec = 0; // Inicializar segundos en 0
+    this.idElement = idElement;
+    this.ms = 0;
+    this.sec = 0;
+    this.min = 0;
+    this.count = null;
   }
 
-  // Método para iniciar el cronómetro
+  // Inicia el cronómetro
   start() {
-    // Detener cualquier intervalo existente antes de iniciar uno nuevo
-    if (this.count) {
-      return;
-    }
-    // Usar setInterval para actualizar el tiempo cada 10 ms
+    if (this.count) return;
+
     this.count = setInterval(() => {
-      // Incrementar milisegundos y manejar el desbordamiento
-      if (this.ms == 100) {
-        this.ms = 0; // Reiniciar milisegundos
-        if (this.sec == 60) {
-          this.sec = 0; // Reiniciar segundos
-          this.min++; // Incrementar minutos
+      if (this.ms === 100) {
+        this.ms = 0;
+        if (this.sec === 60) {
+          this.sec = 0;
+          this.min++;
         } else {
-          this.sec++; // Incrementar segundos
+          this.sec++;
         }
       } else {
-        this.ms++; // Incrementar milisegundos
+        this.ms++;
       }
 
-      // Formatear los valores de minutos, segundos y milisegundos
-      this.malt = this.pad(this.min);
-      this.salt = this.pad(this.sec);
-      this.msalt = this.pad(this.ms);
-
-      // Actualizar el texto del cronómetro en el DOM
-      this.update(this.malt + ":" + this.salt + ":" + this.msalt);
-    }, 10); // Actualización cada 10 ms
+      const malt = this.pad(this.min);
+      const salt = this.pad(this.sec);
+      const msalt = this.pad(this.ms);
+      this.update(`${malt}:${salt}:${msalt}`);
+    }, 10);
   }
 
-  // Método para detener el cronómetro
+  // Detiene el cronómetro
   stop() {
-    clearInterval(this.count); // Detener el intervalo
-    this.count = null; // Limpiar el identificador del intervalo
+    clearInterval(this.count);
+    this.count = null;
   }
 
-  // Método para actualizar el texto del cronómetro en el DOM
+  // Actualiza el valor mostrado en el DOM
   update(txt) {
-    let temp = document.getElementById(this.idElement); // Obtener el elemento HTML
-    temp.firstChild.nodeValue = txt; // Actualizar el contenido del texto
+    const temp = document.getElementById(this.idElement);
+    if (temp && temp.firstChild) temp.firstChild.nodeValue = txt;
   }
 
-  // Método para reiniciar el cronómetro
+  // Reinicia el cronómetro
   restart() {
-    this.ms = 0; // Reiniciar milisegundos
-    this.sec = 0; // Reiniciar segundos
-    this.min = 0; // Reiniciar minutos
-    this.update("00:00:00"); // Actualizar el texto a "00:00:00"
+    this.ms = 0;
+    this.sec = 0;
+    this.min = 0;
+    this.update("00:00:00");
   }
 
-  // Método para formatear los valores de tiempo a dos dígitos
+  // Formatea el número a dos dígitos
   pad(time) {
-    let temp;
-    if (time < 10) {
-      temp = "0" + time; // Agregar un 0 al inicio si el valor es menor a 10
-    } else {
-      temp = time; // Mantener el valor si es mayor o igual a 10
-    }
-    return temp; // Retornar el valor formateado
+    return time < 10 ? "0" + time : time;
   }
 }
-export default Timer;
+

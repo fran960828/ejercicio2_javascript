@@ -1,8 +1,10 @@
-import { shuffleArray } from "../utils/utils";
-import Cell from "./cell";
-import Timer from "./timer";
+import Cell from "./cell.js";
 
-class Board {
+/**
+ * Clase Board
+ * Contiene la lógica del juego del Buscaminas.
+ */
+export class Board {
   #cols;
   #rows;
   #bomb;
@@ -18,74 +20,68 @@ class Board {
     this.cells = [];
   }
 
-  get cols() {
-    return this.#cols;
-  }
-  get rows() {
-    return this.#rows;
-  }
-  get bomb() {
-    return this.#bomb;
-  }
-  get element() {
-    return this.#element;
-  }
+  get cols() { return this.#cols; }
+  get rows() { return this.#rows; }
+  get bomb() { return this.#bomb; }
+  get element() { return this.#element; }
 
+  // Crea la matriz de celdas
   buildArray() {
-    // Crear array plano con minas y ceros
-    const array = Array(this.#bomb)
-      .fill("B")
+    const array = Array(this.#bomb).fill("B")
       .concat(Array(this.#cols * this.#rows - this.#bomb).fill(0));
-    shuffleArray(array);
 
-    // Convertir a matriz bidimensional
-    let arrayBi = [];
+    this.shuffleArray(array);
+
+    const arrayBi = [];
     for (let i = 0; i < this.#rows; i++) {
       arrayBi.push(array.slice(i * this.#cols, (i + 1) * this.#cols));
     }
 
-    // Asignar números a las celdas según minas
     const arraycells = this.asignArray(arrayBi);
-
-    // Crear matriz de instancias Cell
     this.cells = [];
+
     for (let i = 0; i < this.#rows; i++) {
-      let rowCells = [];
+      const rowCells = [];
       for (let j = 0; j < this.#cols; j++) {
-        let cell = new Cell(i, j, arraycells[i][j]);
+        const cell = new Cell(i, j, arraycells[i][j]);
         rowCells.push(cell);
       }
       this.cells.push(rowCells);
     }
+
     return this.cells;
   }
 
+  // Mezcla aleatoriamente el array (Fisher–Yates)
+  shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  // Asigna los números alrededor de las bombas
   asignArray(array) {
     const movs = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1], [0, 1],
+      [1, -1], [1, 0], [1, 1],
     ];
 
     for (let i = 0; i < array.length; i++) {
       for (let j = 0; j < array[i].length; j++) {
         if (array[i][j] === "B") {
           movs.forEach(([dx, dy]) => {
-            const nuevoI = i + dx;
-            const nuevoJ = j + dy;
+            const ni = i + dx;
+            const nj = j + dy;
             if (
-              nuevoI >= 0 &&
-              nuevoI < array.length &&
-              nuevoJ >= 0 &&
-              nuevoJ < array[i].length &&
-              array[nuevoI][nuevoJ] !== "B"
+              ni >= 0 &&
+              ni < array.length &&
+              nj >= 0 &&
+              nj < array[i].length &&
+              array[ni][nj] !== "B"
             ) {
-              array[nuevoI][nuevoJ] += 1;
+              array[ni][nj] += 1;
             }
           });
         }
@@ -93,14 +89,18 @@ class Board {
     }
     return array;
   }
+
+  // --------------------- INTERACCIÓN ---------------------
+
   Opencells() {
     this.#element.addEventListener("click", (event) => {
       this.timer.start();
       const div = event.target.closest(".cell");
-
       if (!div) return;
+
       const cell = this.cells.flat().find((cell) => cell.element === div);
       if (!cell || cell.state !== "close") return;
+
       if (cell.content === "B") {
         cell.element.textContent = "💣";
         cell.state = "bomb";
@@ -116,52 +116,41 @@ class Board {
       }
     });
   }
+
+  // Revela celdas vacías de forma recursiva
   revealAdjacent(row, col) {
-    // Evita índices fuera de rango
     if (
       row < 0 ||
       row >= this.cells.length ||
       col < 0 ||
       col >= this.cells[0].length
-    )
-      return;
+    ) return;
 
-    const cell = this.cells.flat().find((c) => c.row === row && c.col === col);
-    if (
-      !cell ||
-      cell.state === "open" ||
-      cell.state === "flag" ||
-      cell.content === "B"
-    )
-      return;
+    const cell = this.cells[row][col];
+    if (!cell || cell.state === "open" || cell.state === "flag" || cell.content === "B") return;
 
-    // Mostrar el valor si > 0
     if (cell.content > 0) {
       cell.element.textContent = cell.content;
       cell.state = "open";
       this.cssColorCells(cell);
-      return; // detenemos la propagación aquí
+      return;
     }
 
-    // Si es 0, se abre y se propaga a vecinos
     cell.state = "open";
     cell.element.textContent = cell.content;
 
     const directions = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1], [0, 1],
+      [1, -1], [1, 0], [1, 1],
     ];
 
     for (const [dx, dy] of directions) {
       this.revealAdjacent(row + dx, col + dy);
     }
   }
+
+  // Comprueba si el jugador gana o pierde
   checkStateGame() {
     const cellOpen = this.cells.flat().filter((cell) => cell.state === "open");
     if (cellOpen.length === this.#cols * this.#rows - this.#bomb) {
@@ -172,6 +161,7 @@ class Board {
       pWin.innerHTML = `<div class="popup"><h2>PARTIDA GANADA</h2></div>`;
       document.body.appendChild(pWin);
     }
+
     const bombOpen = this.cells.flat().find((cell) => cell.state === "bomb");
     if (bombOpen) {
       this.cells.flat().forEach((cell) => {
@@ -186,15 +176,20 @@ class Board {
       document.body.appendChild(pLose);
     }
   }
+
+  // Evento para colocar banderas
   addFlagEvent() {
     const flag = document.getElementById("flags");
     flag.textContent = this.#bomb;
+
     this.#element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
       const div = event.target.closest(".cell");
       if (!div) return;
+
       const cell = this.cells.flat().find((cell) => cell.element === div);
       if (!cell || cell.state === "open") return;
+
       if (cell.state === "close") {
         cell.state = "flag";
         cell.element.textContent = "🚩";
@@ -202,100 +197,53 @@ class Board {
         cell.state = "close";
         cell.element.textContent = "";
       }
-      flag.textContent = `${
-        this.#bomb -
-        this.cells.flat().filter((cell) => cell.state === "flag").length
-      }`;
+
+      flag.textContent = `${this.#bomb - this.cells.flat().filter((c) => c.state === "flag").length}`;
     });
   }
+
+  // Reinicia el tablero
   restart(divs) {
-    // 1️⃣ Quita mensajes de victoria/derrota
     const result = document.querySelector(".result");
     if (result) result.remove();
 
-    // 2️⃣ Limpia el contenido visual de cada celda
     divs.forEach((div) => (div.textContent = ""));
 
-    // 3️⃣ Genera nuevo tablero lógico
     const newArray = this.buildArray();
-
-    // 4️⃣ Actualiza contenido y estado de cada celda (sin tocar el DOM)
     newArray.flat().forEach((cell, i) => {
       cell.element = divs[i];
       cell.state = "close";
     });
+
     const flag = document.getElementById("flags");
     flag.textContent = this.#bomb;
-    // 5️⃣ Reinicia el temporizador
+
     this.timer.restart();
   }
+
+  // Colores para los números
   cssColorCells(cell) {
-    if (cell.content === 0) cell.element.style.color = "white";
-    if (cell.content === 1) cell.element.style.color = "blue";
-    if (cell.content === 2) cell.element.style.color = "green";
-    if (cell.content === 3) cell.element.style.color = "red";
-    if (cell.content === 4) cell.element.style.color = "purple";
-    if (cell.content === 5) cell.element.style.color = "maroon";
-    if (cell.content === 6) cell.element.style.color = "turquoise";
-    if (cell.content === 7) cell.element.style.color = "black";
-    if (cell.content === 8) cell.element.style.color = "gray";
+    const colors = ["white", "blue", "green", "red", "purple", "maroon", "turquoise", "black", "gray"];
+    cell.element.style.color = colors[cell.content] || "black";
   }
+
+  // Guarda el mejor tiempo
   storeBestTime() {
-    let difficulty = ""; // Definir fuera de los if para poder usarla después
+    let difficulty = "";
+    if (this.#bomb === 10) difficulty = "easy";
+    else if (this.#bomb === 40) difficulty = "medium";
+    else if (this.#bomb === 99) difficulty = "hard";
+    else difficulty = "custom";
 
-    // Determinar la dificultad según el número de bombas
-    if (this.#bomb === 10) {
-      difficulty = "easy";
-    } else if (this.#bomb === 40) {
-      difficulty = "medium";
-    } else if (this.#bomb === 99) {
-      difficulty = "hard";
-    } else {
-      difficulty = "custom"; // Por si acaso
-    }
-
-    // Calcular el tiempo total en segundos
-    const tiempoTotal =
-      this.timer.min * 60 + this.timer.sec + this.timer.ms / 100;
-
-    // Obtener el mejor tiempo guardado para esa dificultad
+    const tiempoTotal = this.timer.min * 60 + this.timer.sec + this.timer.ms / 100;
     const record = JSON.parse(localStorage.getItem(difficulty));
 
-    // Guardar el tiempo si no hay récord o si el nuevo es mejor (menor)
     if (!record || tiempoTotal < record) {
       localStorage.setItem(difficulty, JSON.stringify(tiempoTotal));
-      console.log(
-        `🎉 Nuevo récord en ${difficulty}: ${tiempoTotal.toFixed(2)}s`
-      );
+      console.log(`🎉 Nuevo récord en ${difficulty}: ${tiempoTotal.toFixed(2)}s`);
     } else {
-      console.log(
-        `⏱ No se superó el récord (${record.toFixed(2)}s en ${difficulty})`
-      );
+      console.log(`⏱ No se superó el récord (${record.toFixed(2)}s en ${difficulty})`);
     }
   }
 }
 
-class BoardView {
-  constructor(board) {
-    this.board = board;
-  }
-
-  createCellsDom() {
-    let cellsMatrix = this.board.buildArray();
-    cellsMatrix.forEach((row) => {
-      row.forEach((cell) => {
-        let newDiv = document.createElement("div");
-        newDiv.classList.add("cell");
-        cell.element = newDiv;
-        this.board.element.appendChild(newDiv);
-      });
-    });
-    const resetBtn = document.getElementById("reset");
-    const divs = document.querySelectorAll(".cell");
-    resetBtn.addEventListener("click", () => this.board.restart(divs));
-    this.board.Opencells();
-    this.board.addFlagEvent();
-  }
-}
-
-export { Board, BoardView };
