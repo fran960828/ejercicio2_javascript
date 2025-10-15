@@ -11,14 +11,14 @@ export default class App {
     this.container = container;
     this.timer = timer;
   }
-
+// Da inicio al juego una vez recibe los valores de fila,columna y bombas
   async init() {
     const { row, col, bomb } = await this.getRowsColsBombs();
     this.setupBoard(row, col, bomb);
     this.handleDifficultyChange();
     this.stadistics();
   }
-
+// Obtiene el numero de filas,columnas y bombas segun la dificultad elegida
   getRowsColsBombs() {
     return new Promise((resolve) => {
       const overlay = document.querySelector(".overlay");
@@ -40,22 +40,24 @@ export default class App {
       });
     });
   }
-
+// Prepara el tablero para el juego
   setupBoard(row, col, bomb) {
     this.gridRowsCols(row, col);
     const board = new Board(col, row, bomb, this.container, this.timer);
     const game = new BoardView(board);
     game.createCellsDom();
   }
-
+// Crear la grilla dinamicamente
   gridRowsCols(row, col) {
     this.container.style.gridTemplateColumns = `repeat(${col}, 30px)`;
     this.container.style.gridTemplateRows = `repeat(${row}, 30px)`;
   }
-
+// Añade el evento para modificar la dificultad
   handleDifficultyChange() {
     const difficultyBtn = document.getElementById("difficulty");
     difficultyBtn.addEventListener("click", async () => {
+      const result = document.querySelector(".result");
+      if (result) result.remove();
       const divs = document.querySelectorAll(".cell");
       divs.forEach((div) => div.remove());
       const overlay = document.querySelector(".overlay");
@@ -65,12 +67,14 @@ export default class App {
       this.setupBoard(row, col, bomb);
     });
   }
-
+// Añade el evento para consultar los records obtenidos de cada dificultad
   stadistics() {
     const modal = document.getElementById("statsModal");
     const statsList = document.getElementById("statsList");
 
     document.getElementById("statsBtn").addEventListener("click", () => {
+      const result = document.querySelector(".result");
+      if (result) result.remove();
       const easy = JSON.parse(localStorage.getItem("easy"));
       const medium = JSON.parse(localStorage.getItem("medium"));
       const hard = JSON.parse(localStorage.getItem("hard"));

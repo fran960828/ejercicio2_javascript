@@ -49,6 +49,7 @@ export default class Timer {
 
   // Reinicia el cronómetro
   restart() {
+    this.stop()
     this.ms = 0;
     this.sec = 0;
     this.min = 0;

@@ -1,18 +1,13 @@
-// ─────────────────────────────────────────────
-// IMPORTS: Estructura modular de SASS
-// ─────────────────────────────────────────────
-@use "./vendors/vendors" as *; // Librerías externas
-@use "./abstracts/abstracts" as *; // Variables, mixins, funciones
-@use "./base/base" as *; // Estilos base (reset, tipografía)
-@use "./components/components" as *; // Componentes reutilizables
-@use "./layout/layout" as *; // Estructura de layout
-@use "./pages/pages" as *; // Estilos específicos de páginas
-@use "./themes/themes" as *; // Temas de color
-@use "settings" as *; // Configuración global
 
 // ─────────────────────────────────────────────
 // TABLERO DEL JUEGO
 // ─────────────────────────────────────────────
+.board{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 #game {
   display: grid; // Usamos grid para el tablero
   grid-template-columns: repeat(9, 30px); // 9 columnas de 30px
@@ -21,6 +16,8 @@
   justify-content: center; // Centrado horizontal
   align-items: center; // Centrado vertical
   margin: 20px; // Margen exterior
+  width: fit-content;
+  height: fit-content;
 }
 
 // ─────────────────────────────────────────────

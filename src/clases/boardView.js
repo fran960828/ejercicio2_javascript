@@ -6,7 +6,7 @@ export class BoardView {
   constructor(board) {
     this.board = board;
   }
-
+  // Inserta las celdas en el dom y añade los eventos
   createCellsDom() {
     const cellsMatrix = this.board.buildArray();
     cellsMatrix.forEach((row) => {

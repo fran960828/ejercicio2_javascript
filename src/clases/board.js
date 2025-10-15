@@ -1,4 +1,5 @@
 import Cell from "./cell.js";
+import {shuffleArray} from "../utils/utils.js"
 
 /**
  * Clase Board
@@ -30,7 +31,7 @@ export class Board {
     const array = Array(this.#bomb).fill("B")
       .concat(Array(this.#cols * this.#rows - this.#bomb).fill(0));
 
-    this.shuffleArray(array);
+    shuffleArray(array);
 
     const arrayBi = [];
     for (let i = 0; i < this.#rows; i++) {
@@ -50,14 +51,6 @@ export class Board {
     }
 
     return this.cells;
-  }
-
-  // Mezcla aleatoriamente el array (Fisher–Yates)
-  shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
   }
 
   // Asigna los números alrededor de las bombas
@@ -240,9 +233,6 @@ export class Board {
 
     if (!record || tiempoTotal < record) {
       localStorage.setItem(difficulty, JSON.stringify(tiempoTotal));
-      console.log(`🎉 Nuevo récord en ${difficulty}: ${tiempoTotal.toFixed(2)}s`);
-    } else {
-      console.log(`⏱ No se superó el récord (${record.toFixed(2)}s en ${difficulty})`);
     }
   }
 }
