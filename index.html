@@ -22,6 +22,7 @@
       <div class="btns">
         <button id="reset">Restart Game</button>
         <button id="difficulty">Difficulty Level</button>
+        <button id="statsBtn">Stadistics</button>
       </div>
       <div class="overlay">
         <div class="popup">
@@ -30,6 +31,13 @@
           <button class="level__btn" data-level="easy">Easy 🟢</button>
           <button class="level__btn" data-level="medium">Medium 🟡</button>
           <button class="level__btn" data-level="hard">Hard 🔴</button>
+        </div>
+      </div>
+      <div id="statsModal" class="modal">
+        <div class="modal-content">
+          <span id="closeModal">&times;</span>
+          <h3>🏆 Mejores tiempos</h3>
+          <ul id="statsList"></ul>
         </div>
       </div>
     </main>

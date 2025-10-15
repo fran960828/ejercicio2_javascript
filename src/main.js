@@ -25,3 +25,4 @@ difficultyBtn.addEventListener("click", () => {
     game.createCellsDom();
   });
 });
+App.stadistics();

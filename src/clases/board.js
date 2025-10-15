@@ -166,6 +166,7 @@ class Board {
     const cellOpen = this.cells.flat().filter((cell) => cell.state === "open");
     if (cellOpen.length === this.#cols * this.#rows - this.#bomb) {
       this.timer.stop();
+      this.storeBestTime();
       const pWin = document.createElement("div");
       pWin.classList.add("result");
       pWin.innerHTML = `<div class="popup"><h2>PARTIDA GANADA</h2></div>`;
@@ -238,6 +239,39 @@ class Board {
     if (cell.content === 6) cell.element.style.color = "turquoise";
     if (cell.content === 7) cell.element.style.color = "black";
     if (cell.content === 8) cell.element.style.color = "gray";
+  }
+  storeBestTime() {
+    let difficulty = ""; // Definir fuera de los if para poder usarla después
+
+    // Determinar la dificultad según el número de bombas
+    if (this.#bomb === 10) {
+      difficulty = "easy";
+    } else if (this.#bomb === 40) {
+      difficulty = "medium";
+    } else if (this.#bomb === 99) {
+      difficulty = "hard";
+    } else {
+      difficulty = "custom"; // Por si acaso
+    }
+
+    // Calcular el tiempo total en segundos
+    const tiempoTotal =
+      this.timer.min * 60 + this.timer.sec + this.timer.ms / 100;
+
+    // Obtener el mejor tiempo guardado para esa dificultad
+    const record = JSON.parse(localStorage.getItem(difficulty));
+
+    // Guardar el tiempo si no hay récord o si el nuevo es mejor (menor)
+    if (!record || tiempoTotal < record) {
+      localStorage.setItem(difficulty, JSON.stringify(tiempoTotal));
+      console.log(
+        `🎉 Nuevo récord en ${difficulty}: ${tiempoTotal.toFixed(2)}s`
+      );
+    } else {
+      console.log(
+        `⏱ No se superó el récord (${record.toFixed(2)}s en ${difficulty})`
+      );
+    }
   }
 }
 
