@@ -187,12 +187,12 @@ Ejemplo de almacenamiento en `localStorage`:
 
 ## 📸 Capturas
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-   <img src='img/readme1.png' style="width: 100%;height: 200px;">
-   <img src='img/readme2.png' style="width: 100%;height: 200px;">
-   <img src='img/readme3.png' style="width: 100%;height: 200px;">
-   <img src='img/readme4.png' style="width: 100%;height: 200px;">
-</div>
+
+   <img src='img/readme1.png' width="300" heigth="300">
+   <img src='img/readme2.png' width="300" heigth="300">
+   <img src='img/readme3.png' width="300" heigth="300">
+   <img src='img/readme4.png' width="300" heigth="300">
+
 
 ---
 
